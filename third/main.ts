@@ -1,7 +1,7 @@
 const i = await Deno.readTextFile('input.txt')
+const exp = /mul\((\d+),(\d+)\)/g
 
-
-let input: string[] = i.split('').filter(isValidChar)
+let input: string[] = i.split('').filter(isValidChar).join('')
 
 const numbers = '0123456789'.split('')
 
@@ -9,41 +9,22 @@ let lasteElement = ''
 
 let startValid = false;
 
-for (let index = 0; index < input.length; index++) {
-  const element = input[index];
+
+let ans1 = 0;
+let m;
+
+while ((m = exp.exec(input)) !== null) {
+  let firstN = m[1]
+  let secondN = m[2]
   
-  if (element == 'm') {
-    lasteElement = element
-    startValid = true
-    continue;
-  }
+  console.log({firstN,secondN});
 
-  if (!startValid) continue;
-  if (element == 'u' && lasteElement == 'm') {
-    lasteElement = element
-    startValid = true
-    continue;
-  }
-  if (element == 'l' && lasteElement == 'u') {
-    lasteElement = element
-    startValid = true
-    continue;
-  }
-  if (element == '(' && lasteElement == 'l') {
-    lasteElement = element
-    startValid = true
-    continue;
-  }
-  if (numbers.includes(element))
-
-
+  let res = firstN * secondN
+  ans1 = ans1 + res
   
-  startValid = false
 }
 
-
-
-console.log(input)
+console.log(`The first ans is ${ans1}`)
 
 function isValidChar(c: string) {
   let valid_chars = '0 1 2 3 4 5 6 7 8 9 ( ) , m u l'.split(' ');
